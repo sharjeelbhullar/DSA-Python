@@ -33,5 +33,6 @@ if __name__ == "__main__":
     print(" ".join(map(str, arr)))
 
     arr = quick_sort(arr)
+
     print("After Using Quick Sort:")
     print(" ".join(map(str, arr)))
