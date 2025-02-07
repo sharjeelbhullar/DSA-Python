@@ -1,4 +1,5 @@
 from typing import List
+from collections import defaultdict
 class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
         prefix_sum_count = defaultdict(int)
