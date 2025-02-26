@@ -1,3 +1,5 @@
+from collections import Counter
+import heapq
 class Solution:
     def frequencySort(self, s: str) -> str:
         freq_map = Counter(s)
