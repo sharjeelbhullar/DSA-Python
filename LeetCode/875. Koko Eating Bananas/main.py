@@ -1,17 +1,18 @@
-from math import ceil
+import math
 from typing import List
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
         left, right = 1, max(piles)
         
-        def hours_needed(speed):
-            return sum(ceil(pile / speed) for pile in piles)
-        
-        while left < right:
+        while left <= right:
+            hours = 0
             mid = (left + right) // 2
-            if hours_needed(mid) <= h:
-                right = mid 
+        
+            for p in piles:
+                hours += math.ceil(p/mid) 
+            if hours <= h:
+                right = mid - 1
             else:
                 left = mid + 1
+        return left
 
-        return left 
