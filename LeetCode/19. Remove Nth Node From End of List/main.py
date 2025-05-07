@@ -6,24 +6,20 @@ class ListNode:
         self.next = next
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        dummy = ListNode(0)
-        dummy.next = head
-        
-        # Initialize two pointers
-        slow = dummy
-        fast = dummy
-        
-        # Move fast n steps ahead
-        for _ in range(n):
+        fast = head
+        slow = head
+
+        for i in range(n):
             fast = fast.next
-        
-        # Move both pointers until fast reaches the end
-        while fast.next:
+
+        if fast is None:
+            return head.next
+
+        while fast.next !=  None:
+            fast = fast.next
             slow = slow.next
-            fast = fast.next
-        
-        # Remove the nth node from the end
+
+        delNode = slow.next
         slow.next = slow.next.next
-        
-        # Return the modified list
-        return dummy.next
+        delNode = None
+        return head
