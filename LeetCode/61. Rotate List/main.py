@@ -6,32 +6,24 @@ class ListNode:
         self.next = next
 class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        if not head or not head.next or k == 0:
+        if head == None or head.next == None or k == 0:
             return head
-        
-        # Step 1: Find the length of the linked list
+        # calculating length
+        temp = head
         length = 1
-        current = head
-        while current.next:
-            current = current.next
+        while temp.next != None:
             length += 1
-        
-        # Step 2: Calculate the effective number of rotations
-        k = k % length
-        if k == 0:
-            return head  # No rotation needed if k % length is 0
-        
-        # Step 3: Make the list circular by connecting the tail to the head
-        current.next = head
-        
-        # Step 4: Find the new tail (the node at position n - k % n - 1)
-        steps_to_new_tail = length - k
-        new_tail = head
-        for _ in range(steps_to_new_tail - 1):
-            new_tail = new_tail.next
-        
-        # Step 5: Find the new head (the node after the new tail)
-        new_head = new_tail.next
-        new_tail.next = None  # Break the circular link to finish the rotation
-        
-        return new_head
+            temp = temp.next
+        # link last node to first node
+        temp.next = head
+        k = k % length  # when k is more than length of list
+        end = length - k  # to get end of the list
+        while end:
+            temp = temp.next
+            end -= 1
+        # breaking last node link and pointing to NULL
+        head = temp.next
+        temp.next = None
+
+
+        return head
