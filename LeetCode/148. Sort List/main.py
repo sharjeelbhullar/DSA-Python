@@ -6,40 +6,51 @@ class ListNode:
         self.next = next
 class Solution:
     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head or not head.next:
+        
+        def merge(list1, list2):
+            dummy = ListNode(-1)
+            temp = dummy
+
+            while list1 is not None and list2 is not None:
+                if list1.val <= list2.val:
+                    temp.next = list1
+                    list1 = list1.next
+
+                else:
+                    temp.next = list2
+                    list2 = list2.next
+
+                temp = temp.next
+
+            if list1 is not None:
+                temp.next = list1
+            else:
+                temp.next = list2
+
+            return dummy.next
+        
+        def findMiddle(head):
+            if head is None or head.next is None:
+                return head
+
+            slow = head
+            fast = head.next
+
+            while fast is not None and fast.next is not None:
+                slow = slow.next
+                fast = fast.next.next
+
+            return slow
+        
+        if head is None or head.next is None:
             return head
 
-        # split the list into two halfs
+        middle = findMiddle(head)
+        right = middle.next
+        middle.next = None
         left = head
-        right = self.getMid(head)
-        temp = right.next
-        right.next = None
-        right = temp
-
+        
         left = self.sortList(left)
         right = self.sortList(right)
-        return self.merge(left, right)
 
-    def getMid(self, head):
-        slow, fast = head, head.next
-        while fast and fast.next:
-            slow = slow.next
-            fast = fast.next.next
-        return slow
-
-    def merge(self, list1, list2):
-        tail = dummy = ListNode()
-        while list1 and list2:
-            if list1.val < list2.val:
-                tail.next = list1
-                list1 = list1.next
-            else:
-                tail.next = list2
-                list2 = list2.next
-            tail = tail.next
-        if list1:
-            tail.next = list1
-        if list2:
-            tail.next = list2
-
-        return dummy.next
+        return merge(left, right)
